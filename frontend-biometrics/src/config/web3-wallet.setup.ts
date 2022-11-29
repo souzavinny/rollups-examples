@@ -11,7 +11,7 @@
 
 import injectedModule from "@web3-onboard/injected-wallets";
 import { init } from "@web3-onboard/react";
-import { app as appConstants } from "../config/constants";
+import { app as appConstants, env } from "../config/constants";
 import {
     Chain,
     ChainId,
@@ -42,11 +42,15 @@ const wallets = Object.keys(WalletName).map((wallet) => ({
     url: WalletUrl[wallet as keyof typeof WalletUrl],
 }));
 
+const chainsFiltered = env.DEV
+    ? chains
+    : chains.filter((chain) => chain.label !== "localhost");
+
 export const initWeb3Wallet = () => {
     const injected = injectedModule();
     init({
         wallets: [injected],
-        chains,
+        chains: chainsFiltered,
         appMetadata: {
             name: appConstants.metadata.title,
             icon: "<svg><svg/>", //TODO: change it to app brand icon
