@@ -217,7 +217,7 @@ def handle_advance(data):
 
     except Exception as e:
         status = "reject"
-        msg = f"Error processing data DEU RUIM \n{traceback.format_exc()}"
+        msg = f"Error processing data {data} \n{traceback.format_exc()}"
         logger.error(msg)
         response = requests.post(
             rollup_server + "/report", json={"payload": str2hex(msg)}
