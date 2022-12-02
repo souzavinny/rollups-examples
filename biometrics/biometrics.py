@@ -12,7 +12,7 @@
 
 from genericpath import exists
 from os import environ
-import os, sys
+import os
 import model
 import json
 import traceback
@@ -171,8 +171,7 @@ def handle_advance(data):
             img_name = msg_sender + "_" + input_json["imageId"]
             str642img(lines, img_name)
             # call opencv feature extractor binary to get the histogram
-            os.environ["LD_LIBRARY_PATH"] = "/mnt/dapp/opencv/lib"
-            cmd = "./fexrvv -i " + img_name
+            cmd = "export LD_LIBRARY_PATH=/mnt/dapp/opencv/lib; ./fexrvv -i "+img_name
             so = os.popen(cmd).read()
             print(so)
             loaded = False
@@ -218,7 +217,7 @@ def handle_advance(data):
 
     except Exception as e:
         status = "reject"
-        msg = f"Error processing data {data}\n{traceback.format_exc()}"
+        msg = f"Error processing data DEU RUIM \n{traceback.format_exc()}"
         logger.error(msg)
         response = requests.post(
             rollup_server + "/report", json={"payload": str2hex(msg)}
