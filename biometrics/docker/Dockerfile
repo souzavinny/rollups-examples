@@ -131,6 +131,9 @@ CMD ["run-machine-console.sh"]
 FROM busybox as machine-standalone
 
 WORKDIR /opt/cartesi/share/dapp-bin
+
 COPY --from=machine-server /opt/cartesi/share/dapp-bin .
 
 CMD ["xxd", "-c", "256", "-p", "hash"]
+
+
