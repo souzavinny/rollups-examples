@@ -7,6 +7,70 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.14.0] 2023-04-04
+
+### Added
+
+- Support for Node.js and adaptation of Echo JS DApp to use it
+
+## [0.13.0] 2023-03-10
+
+### Added
+
+- Support for multiple build systems
+- `docker-riscv` build system to create DApps based on RISC-V Docker images
+
+### Changed
+
+- Original build system labeled as `std-rootfs`
+- All Python DApps except `echo-python` adapted to use the new `docker-riscv` build system
+- Bump toolchain to 0.13.0
+- Bump rootfs to 0.16.0
+- Bump rom to 0.15.0
+- Bump server-manager to 0.6.0
+
+## [0.12.0] 2023-01-09
+
+### Added
+
+- Simple frontend-echo web application for Echo DApps
+
+### Changed
+
+- Fix Gitpod URL (prebuilds no longer supported)
+- Fix directory used for sharing deployed contracts in development environment
+- Bump rollups to 0.8.2: fixes to Server Manager Broker Proxy
+
+## [0.11.1] 2022-12-07
+
+### Changed
+
+- Update DApp deployment information
+
+## [0.11.0] 2022-12-06
+
+### Added
+
+- Support for network-specific configurations
+- Support for legacy transactions (allows networks that do not support EIP-1559)
+- Support for Gnosis Chiado Testnet
+- Log level configurations for all Rollups services
+
+### Changed
+
+- Store DApp deployment information in JSON files instead of plain text
+- Bump toolchain to 0.12.0
+- Bump rootfs to 0.15.0
+- Bump kernel to linux-5.15.63-ctsi-1
+- Bump rom to 0.13.0
+- Bump server-manager to 0.5.0
+
+## [0.10.1] 2022-11-17
+
+### Changed
+
+- Update frontend-console's yarn.lock
+
 ## [0.10.0] 2022-11-07
 
 ### Added
@@ -216,6 +280,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove machine-emulator-tools submodule
 - Remove openapi-interfaces submodule
 
+[0.14.0]: https://github.com/cartesi/rollups-examples/releases/tag/v0.14.0
+[0.13.0]: https://github.com/cartesi/rollups-examples/releases/tag/v0.13.0
+[0.12.0]: https://github.com/cartesi/rollups-examples/releases/tag/v0.12.0
+[0.11.1]: https://github.com/cartesi/rollups-examples/releases/tag/v0.11.1
+[0.11.0]: https://github.com/cartesi/rollups-examples/releases/tag/v0.11.0
+[0.10.1]: https://github.com/cartesi/rollups-examples/releases/tag/v0.10.1
 [0.10.0]: https://github.com/cartesi/rollups-examples/releases/tag/v0.10.0
 [0.9.1]: https://github.com/cartesi/rollups-examples/releases/tag/v0.9.1
 [0.9.0]: https://github.com/cartesi/rollups-examples/releases/tag/v0.9.0

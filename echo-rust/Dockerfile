@@ -1,7 +1,7 @@
 # syntax=docker.io/docker/dockerfile:1.4
-FROM cartesi/toolchain:0.11.0 as dapp-build
+FROM cartesi/toolchain:0.13.0
 
 WORKDIR /opt/cartesi/dapp
 
 COPY . .
-RUN cargo build -Z build-std=std,core,alloc,panic_abort,proc_macro --target riscv64ima-cartesi-linux-gnu.json --release
+RUN cargo build -Z build-std=std,core,alloc,panic_abort,proc_macro --target riscv64g-cartesi-linux-gnu.json --release

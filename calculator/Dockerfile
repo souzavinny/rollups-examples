@@ -1,11 +1,7 @@
 # syntax=docker.io/docker/dockerfile:1.4
-FROM toolchain-python
+FROM --platform=linux/riscv64 cartesi/python:3.10-slim-jammy
 
 WORKDIR /opt/cartesi/dapp
 COPY . .
 
-RUN <<EOF
-python3 -m crossenv $(which python3) .crossenv
-. ./.crossenv/bin/activate
-pip install -r requirements.txt
-EOF
+RUN pip install -r requirements.txt

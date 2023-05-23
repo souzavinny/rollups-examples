@@ -86,7 +86,7 @@ With that in place, you can submit a deploy transaction to the Cartesi DApp Fact
 DAPP_NAME=template docker compose -f ./deploy-testnet.yml up
 ```
 
-This will create a file at `./deployments/<network>/template.address` with the deployed contract's address.
+This will create a file at `./deployments/<network>/template.json` with the deployed contract's address.
 Once the command finishes, it is advisable to stop the docker compose and remove the volumes created when executing it.
 
 ```shell
@@ -124,7 +124,7 @@ export RPC_URL=<https://your.rpc.gateway>
 Then, inputs can be sent by specifying the DApp contract's address, as follows:
 
 ```shell
-yarn start input send --payload "Hello there" --addressFile path/to/template/deployments/<network>/template.address
+yarn start input send --payload "Hello there" --addressFile path/to/template/deployments/<network>/template.json
 ```
 
 Resulting notices can then be retrieved by querying the local Cartesi Node, as before:
@@ -136,6 +136,12 @@ yarn start notice list
 ## Running the back-end in host mode
 
 When developing an application, it is often important to easily test and debug it. For that matter, it is possible to run the Cartesi Rollups environment in [host mode](https://github.com/cartesi/rollups-examples/tree/main/README.md#host-mode), so that the DApp's back-end can be executed directly on the host machine, allowing it to be debugged using regular development tools such as an IDE.
+
+The host environment can be executed with the following command:
+
+```shell
+docker compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose-host.yml up
+```
 
 This DApp's back-end is written in Python, so to run it in your machine you need to have `python3` installed.
 
