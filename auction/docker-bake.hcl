@@ -1,1 +1,1 @@
-../base.hcl
+../build/docker-riscv/base.hcl

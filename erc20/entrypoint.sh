@@ -12,4 +12,5 @@
 # specific language governing permissions and limitations under the License.
 
 set -e
-PYTHONPATH=/mnt/dapp/.crossenv/cross/lib/python3.10/site-packages rollup-init python3 erc20.py
+export PATH="/opt/venv/bin:$PATH"
+rollup-init python3 erc20.py
