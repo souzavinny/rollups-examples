@@ -10,6 +10,7 @@
 // specific language governing permissions and limitations under the License.
 
 import { Argv } from "yargs";
+
 import { getVoucher } from "../../graphql/vouchers";
 import {
     connect,
@@ -21,15 +22,15 @@ import {
     Args as RollupsArgs,
     builder as rollupsBuilder,
 } from "../../rollups";
-import { OutputValidityProofStruct } from "@cartesi/rollups/dist/src/types/contracts/interfaces/IOutput";
 
 interface Args extends ConnectArgs, RollupsArgs {
     url: string;
-    id: string;
+    index: number;
+    input: number;
 }
 
 export const command = "execute";
-export const describe = "Execute voucher given its id";
+export const describe = "Execute voucher given its input index and its index";
 
 const DEFAULT_URL = "http://localhost:4000/graphql";
 
@@ -47,21 +48,30 @@ export const builder = (yargs: Argv) => {
             type: "string",
             default: DEFAULT_URL,
         })
-        .option("id", {
-            describe: "Voucher ID",
-            type: "string",
+        .option("index", {
+            describe: "Voucher index within its associated Input",
+            type: "number",
+            requiresArg: true,
+        })
+        .option("input", {
+            describe: "Input index",
+            type: "number",
             requiresArg: true,
         });
 };
 
 export const handler = async (args: Args) => {
-    const { url, id, rpc, mnemonic, accountIndex } = args;
+    const { url, index, input, rpc, mnemonic, accountIndex } = args;
 
     // wait for vouchers to appear in reader
-    console.log(`retrieving voucher "${id}" along with proof`);
-    const voucher = await getVoucher(url, id);
+    console.log(
+        `retrieving voucher "${index}" from input "${input}" along with proof`
+    );
+    const voucher = await getVoucher(url, index, input);
     if (!voucher.proof) {
-        console.log(`voucher "${id}" has no associated proof yet`);
+        console.log(
+            `voucher "${index}" from input "${input}" has no associated proof yet`
+        );
         return;
     }
 
@@ -82,20 +92,14 @@ export const handler = async (args: Args) => {
     const signerAddress = await outputContract.signer.getAddress();
     console.log(`using account "${signerAddress}"`);
 
-    // send transaction to execute voucher
-    console.log(`executing voucher "${id}"`);
-    const proof: OutputValidityProofStruct = {
-        ...voucher.proof,
-        epochIndex: voucher.input.epoch.index,
-        inputIndex: voucher.input.index,
-        outputIndex: voucher.index,
-    };
+    // send transaction to validate voucher
+    console.log(`executing voucher "${index}" from input "${input}"`);
+
     try {
-        // console.log(`Would check: ${JSON.stringify(proof)}`);
         const tx = await outputContract.executeVoucher(
             voucher.destination,
             voucher.payload,
-            proof
+            voucher.proof
         );
         const receipt = await tx.wait();
         console.log(`voucher executed! (tx="${tx.hash}")`);

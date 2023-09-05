@@ -68,24 +68,11 @@ static void rollup_ioctl(int fd, unsigned long request, void *data) {
     }
 }
 
-static std::string hex(const uint8_t *data, uint64_t length) {
-    std::stringstream ss;
-    ss << "0x";
-    for (auto b: std::string_view{reinterpret_cast<const char *>(data), length}) {
-        ss << std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned>(b);
-    }
-    return ss.str();
-}
-
 void handle_advance(int fd, rollup_bytes payload_buffer) {
     struct rollup_advance_state request{};
     request.payload = payload_buffer;
     rollup_ioctl(fd, IOCTL_ROLLUP_READ_ADVANCE_STATE, &request);
-    if (request.metadata.epoch_index == 0 && request.metadata.input_index == 0) {
-        auto rollup_address = hex(request.metadata.msg_sender, CARTESI_ROLLUP_ADDRESS_SIZE);
-        std::cout << "[DApp] Captured rollup address: " << rollup_address << std::endl;
-        return;
-    }
+
     auto data = std::string_view{reinterpret_cast<const char *>(request.payload.data), request.payload.length};
     std::cout << "[DApp] Received advance request data " << data << std::endl;
     std::cout << "[DApp] Adding notice" << std::endl;

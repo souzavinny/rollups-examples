@@ -22,7 +22,7 @@ import {
     builder as rollupsBuilder,
 } from "../../rollups";
 import { findInputAddedInfo } from "../util";
-import { networks } from "../../networks";
+
 
 interface Args extends ConnectArgs, RollupsArgs {
     erc721?: string;
@@ -35,21 +35,7 @@ const safeTransferFrom = "safeTransferFrom(address,address,uint256)";
 export const command = "deposit";
 export const describe = "Deposit ERC-721 tokens to a DApp";
 
-const tokenAddress = (chainId: number): string | undefined => {
-    const network = networks[chainId];
-    if (!network) {
-        return; // undefined
-    }
 
-    try {
-        if (network.name == "localhost") {
-            return require("../../../../common-contracts/deployments/localhost/localhost_aux.json")
-                .contracts.CartesiNFT.address;
-        }
-    } catch (e) {
-        return; // undefined
-    }
-};
 
 export const builder = (yargs: Argv<Args>) => {
     const connectArgs = connectBuilder(yargs, true);
@@ -78,7 +64,7 @@ export const handler = async (args: Args) => {
     console.log(`connected to chain ${network.chainId}`);
 
     // connect to rollups
-    const { inputContract, erc721Portal } = await rollups(
+    const {dapp, inputContract, erc721Portal, deployment } = await rollups(
         network.chainId,
         signer || provider,
         args
@@ -87,7 +73,7 @@ export const handler = async (args: Args) => {
     console.log(`depositing token ${tokenId}...`);
 
     // get ERC-721 contract address
-    const erc721address = erc721 ?? tokenAddress(network.chainId);
+    const erc721address = erc721 ?? deployment?.contracts["SimpleERC721"]?.address;
     if (!erc721address) {
         throw new Error(
             `cannot resolve ERC-721 address for chain ${network.chainId}`
@@ -103,11 +89,21 @@ export const handler = async (args: Args) => {
     const senderAddress = await erc721Portal.signer.getAddress();
     console.log(`using account "${senderAddress}"`);
 
-    const tx = await erc721Contract[safeTransferFrom](
-        senderAddress,
-        erc721Portal.address,
-        tokenId
-    );
+    //Set the ERC721Portal as the new controller
+    const approve = await erc721Contract.approve(erc721Portal.address,tokenId)
+
+    await approve.wait();
+
+    //Deposit token through portal
+    const tx = await erc721Portal.depositERC721Token(
+        erc721address,
+        dapp,
+        tokenId,
+        "0x",
+        "0x"
+    )
+
+
     console.log(`transaction: ${tx.hash}`);
     console.log("waiting for confirmation...");
 
@@ -117,6 +113,6 @@ export const handler = async (args: Args) => {
     // find added input information from transaction receipt
     const inputAddedInfo = findInputAddedInfo(receipt, inputContract);
     console.log(
-        `deposit successfully executed as input ${inputAddedInfo.input_index} of epoch ${inputAddedInfo.epoch_index}`
+        `deposit successfully executed as input ${inputAddedInfo.input_index}`
     );
 };

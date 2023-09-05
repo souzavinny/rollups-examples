@@ -10,21 +10,16 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the
 // specific language governing permissions and limitations under the License.
 
+/// @title A Simple ERC-20 Contract
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract CartesiNFT is ERC721 {
-    using Counters for Counters.Counter;
-    Counters.Counter private currentTokenId;
-
-    constructor() ERC721("CartesiNFT", "CNFT") {}
-
-    function mintTo(address recipient) public returns (uint256) {
-        currentTokenId.increment();
-        uint256 newItemId = currentTokenId.current();
-        _safeMint(recipient, newItemId);
-        return newItemId;
+contract SimpleERC20 is ERC20 {
+    constructor(
+        address minter,
+        uint256 initialSupply
+    ) ERC20("SimpleERC20", "SIM20") {
+        _mint(minter, initialSupply);
     }
 }
