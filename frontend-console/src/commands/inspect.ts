@@ -10,7 +10,6 @@
 // specific language governing permissions and limitations under the License.
 
 import fetch from "cross-fetch";
-import { ethers } from "ethers";
 import path from "path";
 import { Argv } from "yargs";
 import { hex2str } from "./utils";
@@ -48,7 +47,9 @@ export const handler = async (args: Args) => {
     if (response.status == 200) {
         const result = await response.json();
         console.log(`Inspect status: ${JSON.stringify(result.status)}`);
-        console.log(`Metadata: ${JSON.stringify(result.metadata)}`);
+        console.log(
+            `Input count: ${JSON.stringify(result.processed_input_count)}`
+        );
         console.log(`Reports:`);
         for (let i in result.reports) {
             let payload = result.reports[i].payload;

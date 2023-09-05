@@ -19,13 +19,15 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
 
     const opts: DeployOptions = {
         from: deployer,
+        deterministicDeployment: true,
         log: true,
     };
 
-    await deployments.deploy("CartesiNFT", {
+    await deployments.deploy("SimpleERC20", {
         ...opts,
+        args: [deployer, "0xffffffffffffffffffffffffffffffffffff"]
     });
 };
 
 export default func;
-export const tags = ["CartesiNFT"];
+export const tags = ["SimpleERC20"];
