@@ -23,6 +23,7 @@ export const FeedbackBoard: FC<IFeedbackBoard> = ({ data, status }) => {
         currentData: typeof data,
         currentStatus: typeof status
     ) => {
+        console.log("currentStatus e currentData: ",currentStatus,currentData)
         if (currentStatus !== "resolved" && !data?.length)
             return { message: null };
 

@@ -10,22 +10,31 @@
 // specific language governing permissions and limitations under the License.
 
 import {
-    InputFacet,
-    InputFacet__factory,
-    OutputFacet,
-    OutputFacet__factory,
-    RollupsFacet,
-    RollupsFacet__factory,
+    IInputBox,
+    ICartesiDApp,
+    IInputBox__factory,
+    ICartesiDApp__factory,
+    IERC20Portal,
+    IERC721Portal,
+    IERC20Portal__factory,
+    IERC721Portal__factory,
 } from "@cartesi/rollups";
+import { Deployment, Contract } from "../../abi";
 import { Web3Provider } from "@ethersproject/providers";
 import { ConnectedChain } from "@web3-onboard/core";
 import { ChainId } from "../../config/types";
 import { env } from "../../config/constants";
-
+import {
+    readAddressFromFile,
+    readAllContractsFromDir
+} from "../../utils"
+import { networks } from "../../networks";
 export interface RollupsContracts {
-    rollupsContract: RollupsFacet;
-    inputContract: InputFacet;
-    outputContract: OutputFacet;
+    dapp: string;
+    inputContract: IInputBox;
+    outputContract: ICartesiDApp;
+    erc20Portal: IERC20Portal;
+    erc721Portal: IERC721Portal;
 }
 
 export const addressMap: Record<ChainId, string> = {
@@ -43,24 +52,41 @@ export const genRollupsContracts = (
     if (!address) {
         throw new Error("unable to resolve DApp address");
     }
-
+    //TODO
+    const InputBox = "0x59b22D57D4f067708AB0c00552767405926dc768";
+    const ERC20Portal = "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB";
+    const ERC721Portal = "0x237F8DD094C0e47f4236f12b4Fa01d6Dae89fb87";
+    const OutputContract = "0x70ac08179605AF2D9e75782b8DEcDD3c22aA4D0C"
     // connect to contracts
-    const inputContract = InputFacet__factory.connect(
-        address,
+    const inputContract = IInputBox__factory.connect(
+        InputBox,
         provider.getSigner()
     );
-    const outputContract = OutputFacet__factory.connect(
-        address,
-        provider.getSigner()
-    );
-    const rollupsContract = RollupsFacet__factory.connect(
-        address,
+    const outputContract = ICartesiDApp__factory.connect(
+        OutputContract,
         provider.getSigner()
     );
 
+    const erc20Portal = IERC20Portal__factory.connect(
+        ERC20Portal,
+        provider.getSigner()
+    );
+    const erc721Portal = IERC721Portal__factory.connect(
+        ERC721Portal,
+        provider.getSigner()
+    );
+
+    console.log("This is the inputbox address: ", InputBox)
+    console.log("This is the ERC20Portal address: ", ERC20Portal)
+    console.log("This is the outputContract address: ", OutputContract)
+    console.log("This is the ERC721Portal address: ", ERC721Portal)
+    console.log("This is dapp: adress: ", address)
+    
     return {
+        dapp: OutputContract,
         inputContract,
         outputContract,
-        rollupsContract,
+        erc20Portal,
+        erc721Portal
     };
 };
