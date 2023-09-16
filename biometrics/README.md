@@ -304,7 +304,7 @@ Below is a short video on how the input front frontend console should work:
 
 [(Back to top)](#table-of-contents)
 
-We can use the [frontend-console](../frontend-biometrics) application to interact with the DApp.
+We can use the [frontend-biometrics](../frontend-biometrics) application to interact with the DApp.
 Ensure that the [application has already been built](../frontend-biometrics/README.md#building) before using it.
 
 First, you will need to import a local wallet to the metamask, since the frontend console uses it to send the transactions to the backend. With that said, you will need to connect to the local blockchain. To do that, do the following:
