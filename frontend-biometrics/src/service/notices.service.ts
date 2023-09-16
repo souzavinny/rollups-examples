@@ -66,7 +66,6 @@ export const getNotices = async (
         });
         result.error = errorMessage;
     }
-    console.log("Resultado: ", result)
     return result
 
 };

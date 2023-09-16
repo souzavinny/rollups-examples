@@ -74,7 +74,6 @@ export const sendInput = async (
 
     // connect to provider
     const { dapp,inputContract } = connect(chainId, walletProvider);
-    console.log(walletProvider)
     // convert string to input bytes
     
     const inputBytes = ethers.utils.isBytesLike(input)

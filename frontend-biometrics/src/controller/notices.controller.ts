@@ -24,7 +24,6 @@ export const fetchNotices = async (
     dispatch({ type: "start_request" });
     try {
         let fetchedNotices = await getNotices(params);
-        console.log("this is the fetched notice: ", fetchNotices)
         //TODO: change refetch to pub/sub
         const hasUnableToFindError = fetchedNotices.error?.match(
             /(unable|find|input)/
