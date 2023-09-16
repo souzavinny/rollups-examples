@@ -1,18 +1,58 @@
-# Decentralized Biometrics Solution
+<div align="center">
+    <h1>Biometrics classifier</h1>
+    <i>A Decentralized Biometrics Solution</i>
+</div>
+<div align="center">
+  This repository contains an OpenCV Biometrics DApp developed using cartesi rollups.
+</div>
 
-This repository contains an OpenCV Biometrics DApp developed using [cartesi rollups](https://docs.cartesi.io/cartesi-rollups/).
+<div align="center">
+  
+  <a href="">[![Static Badge](https://img.shields.io/badge/cartesi--rollups-1.0.0-5bd1d7)](https://docs.cartesi.io/cartesi-rollups/)</a>
+  <a href="">[![Static Badge](https://img.shields.io/badge/OpenCV-4.8-red)](https://opencv.org/)</a>
+  <a href="">[![Static Badge](https://img.shields.io/badge/python-3.11-yellow)](https://www.python.org/)</a>
+  <a href="">[![Static Badge](https://img.shields.io/badge/C%2B%2B-17-blue)](https://en.wikipedia.org/wiki/C%2B%2B)</a>
+</div>
+
+
+
+
+
+
+
+# Table of contents
+
+- [Intro](#intro)
+  - [Key Features](#key-features)
+  - [Benefits](#benefits)
+- [Biometrics Workflow Explanation](#biometrics-workflow-explanation)
+- [Requirements](#requirements)
+- [Install Process](#install-process)
+  - [Creating the needed files](#creating-the-needed-files)
+  - [Loading and running in production mode](loading-and-running-in-production-mode)
+  - [Running the back-end in host mode](running-the-back-end-in-host-mode)
+- [Understanding the application](#understanding-the-application)
+- [Interacting with the application](#interacting-with-the-application)
+  - [Frontend-Console](#frontend-console)
+  - [Using the Frontend-biometrics](#using-the-frontend-biometrics)
+
+# Intro
 
 The DApp leverages Support Vector Machine [SVM](https://en.wikipedia.org/wiki/Support-vector_machine) models created with [scikit-learn](https://scikit-learn.org/), [NumPy](https://numpy.org/) and [pandas](https://pandas.pydata.org/) to perform biometric analysis. Subsequently, the model is transpiled into native Python code with zero dependencies using [m2cgen (Model to Code Generator)](https://github.com/BayesWitnesses/m2cgen), a Model to Code Generator. This approach is inspired by a machine learning [tutorial](https://www.freecodecamp.org/news/transform-machine-learning-models-into-native-code-with-zero-dependencies/) and is particularly beneficial for a Cartesi DApp as it eliminates the necessity of porting extensive machine learning libraries to the Cartesi Machine's RISC-V architecture. This not only simplifies the development process but also makes the final back-end code more efficient to execute. Additionally, this DApp utilizes C++ OpenCV to generate histograms for all images used during the training and testing phases, as well as for new image inputs.
 
 The practical goal of this application is to predict a classification for Fingerprints. As such, users can submit images as inputs to classify as "Live" or "Fake". 
 
 ## Key Features
+[(Back to top)](#table-of-contents)
+
 - SVM Model Generation: Utilizes scikit-learn, NumPy, and pandas to generate a Support Vector Machine (SVM) model for biometric analysis.
 - Model Transpilation: Uses m2cgen to transpile the SVM model into native Python code with zero dependencies, facilitating its integration into the Cartesi DApp.
 - Image Processing: Employs C++ OpenCV to generate histograms for all images used during training, testing, and new image inputs.
 - Cartesi Rollups: Leverages the Cartesi Rollups infrastructure to ensure the DApp is scalable, decentralized, and secure.
 
 ## Benefits
+
+[(Back to top)](#table-of-contents)
 - Simplified Development: Eliminates the need to port extensive machine learning libraries to the Cartesi Machine's RISC-V architecture.
 - Efficient Execution: Transpiling the model into native code with no dependencies ensures efficient execution on the back-end.
 - Robust Image Processing: Utilizing C++ OpenCV for image processing ensures efficiency and robustness.
@@ -20,22 +60,25 @@ The practical goal of this application is to predict a classification for Finger
 
 # Biometrics Workflow Explanation
 
+[(Back to top)](#table-of-contents)
 This example employs a supervised approach to classify fingerprint samples as either 'live' or 'fake'. The workflow used is standard for this type of scenario: providing a classifier with labeled inputs and then utilizing the generated algorithm to classify new inputs with a label. In this case, we are dealing with binary classification, where the classifier will predict the inputs as one class or the other (in this instance as 'live' or 'fake'). The diagram below illustrates the workflow with every technology utilized in this experiment.
 
 
-![bio drawio (2)](https://user-images.githubusercontent.com/4421825/172436514-10043ed8-1b92-4861-a39f-8c9aa41679fc.png)
+![image](https://github.com/souzavinny/rollups-examples/assets/4421825/f3efe69d-8ae0-4e64-9865-b8ae76e53a0d)
 
 
-The whole DApp uses C++ opencv and Python to achieve the main goal. It is a product of much research applied with the Cartesi API.
 
-## Requirements
+The whole DApp uses C++ OpenCV and Python to achieve the main goal. It is a product of much research applied with the Cartesi API.
 
+# Requirements
+[(Back to top)](#table-of-contents)
 Please refer to the [rollups-examples requirements](https://github.com/cartesi/rollups-examples/tree/main/README.md#requirements).
 
 # Install Process
 The steps below show how to set up and run the Decentralized Biometrics example. Those steps were executed and tested in Ubuntu 20 and 22 environments.
 
 ## Creating the needed files
+[(Back to top)](#table-of-contents)
 To run the biometrics example, clone the repository as follows:
 
 ```shell
@@ -125,6 +168,7 @@ Recall 0.81
 Accuracy 0.7975
 ```
 ## Loading and running in production mode
+[(Back to top)](#table-of-contents)
 
 With all the files needed ready, run the following command:
 
@@ -154,6 +198,7 @@ docker compose -f ../docker-compose.yml -f ./docker-compose.override.yml down -v
 This is a very important command while dealing with the application because it turns down the dapp and also deletes the docker volumes. While testing this can be crucial while dealing with the blockchain node. Sometimes you want to restart the blockchain from the start, and only by doing this command this can be accomplished. 
 
 ## Running the back-end in host mode
+[(Back to top)](#table-of-contents)
 
 When developing an application, it is often important to easily test and debug it. For that matter, it is possible to run the Cartesi Rollups environment in [host mode](https://github.com/cartesi/rollups-examples/tree/main/README.md#host-mode), so that the DApp's back-end can be executed directly on the host machine, allowing it to be debugged using regular development tools such as an IDE.
 
@@ -168,18 +213,21 @@ pip install -r requirements.txt
 ROLLUP_HTTP_SERVER_URL="http://127.0.0.1:5004" python3 biometrics.py
 ```
 
-## Understanding the application
+# Understanding the application
+[(Back to top)](#table-of-contents)
 
 As explained before, The DApp will receive an image as input to classify as a Live(genuine) finger or Fake(Spoof attack). 
 
-When building the machine, the dataset is used as training data for building a Suport Vector Machine model. The model currently takes into the LBP histogram of characterists([See](https://en.wikipedia.org/wiki/Local_binary_patterns)). This generates a histogram to be used as features to classify.
+When building the machine, the dataset is used as training data for building a Support Vector Machine model. The model currently takes into the LBP histogram of characteristics ([See](https://en.wikipedia.org/wiki/Local_binary_patterns)). This generates a histogram to be used as features to classify.
 
 The predicted classification result will be given as "Live" (Genuine Finger) or "Fake" (Spoof Attack).
 
 # Interacting with the application
+[(Back to top)](#table-of-contents)
 There are two ways to interact with the application. One is the [frontend console](../frontend-console) and another is the [frontend-biometrics](../frontend-biometrics). Here is a detailed explanation of how to do both.
 
-## Frontend-Console. 
+## Frontend-Console 
+[(Back to top)](#table-of-contents)
 We can use the [frontend-console](../frontend-console) application to interact with the DApp.
 Ensure that the [application has already been built](../frontend-console/README.md#building) before using it.
 
@@ -205,7 +253,7 @@ Image Sent!
 Time Elapsed was: 38.65782713890076
 Time per chunks was : 9.66445678472519
 ```
-While in the backend, you can also see in the terminal window running it something similar to:
+While in the backend, you can also see in the terminal window running something similar to:
 
 ![image](https://github.com/souzavinny/rollups-examples/assets/4421825/f7a6f873-2203-4ecd-ba2d-1ce6e39bd133)
 
@@ -237,6 +285,7 @@ Below is a short video on how the input front frontend console should work:
 
 
 ## Using the Frontend-biometrics
+[(Back to top)](#table-of-contents)
 
 We can use the [frontend-console](../frontend-biometrics) application to interact with the DApp.
 Ensure that the [application has already been built](../frontend-biometrics/README.md#building) before using it.
@@ -260,5 +309,67 @@ If everything goes as expected, you will see the funds of the localhost blockcha
 Now you can send any of the images in the gallery to the backend through transactions. Keep in mind you will be prompted to confirm the transaction four times in sequence. See the following video below that showcases the frontend:
 
 [biometrics-feedback-animation.webm](https://github.com/souzavinny/rollups-examples/assets/4421825/8b9f68a1-1368-4cb1-a9bb-7889fc41412f)
+
+# Deploying to a testnet
+
+Deploying the application to a blockchain requires creating a smart contract on that network, as well as running a validator node for the DApp.
+
+The first step is to build the DApp's back-end machine, which will produce a hash that serves as a unique identifier.
+
+```shell
+docker buildx bake -f docker-bake.hcl -f docker-bake.override.hcl machine --load
+```
+
+Once the machine docker image is ready, we can use it to deploy a corresponding Rollups smart contract. This requires you to define a few environment variables to specify which network you are deploying to, which account to use, and which RPC gateway to use when submitting the deploy transaction.
+
+```shell
+export NETWORK=<network>
+export MNEMONIC=<user sequence of twelve words>
+export RPC_URL=<https://your.rpc.gateway>
+```
+
+For example, to deploy to the Sepolia testnet using an Alchemy RPC node, you could execute:
+
+```shell
+export NETWORK=sepolia
+export MNEMONIC=<user sequence of twelve words>
+export RPC_URL=https://eth-sepolia.g.alchemy.com/v2/<USER_KEY>
+```
+
+With that in place, you can submit a deploy transaction to the Cartesi DApp Factory contract on the target network by executing the following command:
+
+```shell
+DAPP_NAME=biometrics docker compose -f ./deploy-testnet.yml up
+```
+
+This will create a file at `./deployments/<network>/template.json` with the deployed contract's address.
+Once the command finishes, it is advisable to stop the docker compose and remove the volumes created when executing it.
+
+```shell
+DAPP_NAME=biometrics docker compose -f ./deploy-testnet.yml down -v
+```
+
+After that, a corresponding Cartesi Validator Node must also be instantiated in order to interact with the deployed smart contract on the target network and handle the back-end logic of the DApp.
+
+Aside from the environment variables defined above, the node will also need a secure websocket endpoint for the RPC gateway (WSS URL).
+
+For example, for Sepolia and Alchemy, you would set the following additional variable:
+
+```shell
+export WSS_URL=wss://eth-sepolia.g.alchemy.com/v2/<USER_KEY>
+```
+
+Then, the node itself can be started by running a docker compose as follows:
+
+```shell
+DAPP_NAME=biometrics docker compose --env-file ./env.<network> -f ./docker-compose-testnet.yml -f ./docker-compose.override.yml up
+```
+
+Which, in the case of Sepolia, would be:
+
+```shell
+DAPP_NAME=biometrics docker compose --env-file ./env.sepolia -f ./docker-compose-testnet.yml -f ./docker-compose.override.yml up
+```
+
 
 
