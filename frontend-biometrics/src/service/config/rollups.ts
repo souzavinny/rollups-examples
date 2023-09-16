@@ -38,8 +38,8 @@ export interface RollupsContracts {
 }
 
 export const addressMap: Record<ChainId, string> = {
-    [ChainId.localhost]: env.VITE_LOCAL_DAPP_ADDRESS,
-    [ChainId.testnet]: env.VITE_TESTNET_DAPP_ADDRESS,
+    [ChainId.localhost]: env.VITE_OUTPUT_ADDRESS,
+    [ChainId.testnet]: env.VITE_OUTPUT_ADDRESS,
 };
 
 export const genRollupsContracts = (
