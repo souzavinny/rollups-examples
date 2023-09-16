@@ -10,7 +10,7 @@
 // specific language governing permissions and limitations under the License.
 
 import { Dispatch } from "react";
-import { NoticesByEpochAndInputQueryVariables } from "../../generated/graphql";
+import { NoticesByInputQueryVariables } from "../../generated/graphql";
 import { getNotices, NoticeViewModel } from "../service/notices.service";
 import { genTimerPromise } from "../utils/timer-promise";
 import { REFETCH_TIME_DEFAULT } from "./config/constants";
@@ -18,7 +18,7 @@ import { ServiceReducerActions } from "./use-service/use-service.hook";
 
 export const fetchNotices = async (
     dispatch: Dispatch<ServiceReducerActions<NoticeViewModel[]>>,
-    params: NoticesByEpochAndInputQueryVariables,
+    params: NoticesByInputQueryVariables,
     refetchIfEmpty?: boolean
 ) => {
     dispatch({ type: "start_request" });
@@ -26,7 +26,7 @@ export const fetchNotices = async (
         let fetchedNotices = await getNotices(params);
         //TODO: change refetch to pub/sub
         const hasUnableToFindError = fetchedNotices.error?.match(
-            /(unable|find|input|epoch)/gi
+            /(unable|find|input)/
         );
 
         if (refetchIfEmpty || hasUnableToFindError) {

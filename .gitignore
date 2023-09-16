@@ -1,0 +1,16 @@
+biometrics/fexrvv
+biometrics/deployments
+biometrics/model/.env
+biometrics/model/CmakeFiles
+biometrics/model/build_model_files/CMakeFiles
+biometrics/model/testing_hists.txt
+biometrics/model/testing_labels.txt
+biometrics/model/training_hists.txt
+biometrics/model/training_labels.txt
+biometrics/model/build_model_files/cmake_install.cmake
+biometrics/model/build_model_files/CMakeCache.txt
+biometrics/model/build_model_files/fex
+biometrics/opencv/build/CMakeFiles/cmake.check_cache
+biometrics/opencv/build/CMakeCache.txt
+biometrics/model.py
+biometrics/.venv
