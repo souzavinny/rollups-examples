@@ -15,11 +15,6 @@
 </div>
 
 
-
-
-
-
-
 # Table of contents
 
 - [Intro](#intro)
@@ -53,6 +48,8 @@ The practical goal of this application is to predict a classification for Finger
 ## Benefits
 
 [(Back to top)](#table-of-contents)
+
+
 - Simplified Development: Eliminates the need to port extensive machine learning libraries to the Cartesi Machine's RISC-V architecture.
 - Efficient Execution: Transpiling the model into native code with no dependencies ensures efficient execution on the back-end.
 - Robust Image Processing: Utilizing C++ OpenCV for image processing ensures efficiency and robustness.
@@ -61,6 +58,8 @@ The practical goal of this application is to predict a classification for Finger
 # Biometrics Workflow Explanation
 
 [(Back to top)](#table-of-contents)
+
+
 This example employs a supervised approach to classify fingerprint samples as either 'live' or 'fake'. The workflow used is standard for this type of scenario: providing a classifier with labeled inputs and then utilizing the generated algorithm to classify new inputs with a label. In this case, we are dealing with binary classification, where the classifier will predict the inputs as one class or the other (in this instance as 'live' or 'fake'). The diagram below illustrates the workflow with every technology utilized in this experiment.
 
 
@@ -72,6 +71,8 @@ The whole DApp uses C++ OpenCV and Python to achieve the main goal. It is a prod
 
 # Requirements
 [(Back to top)](#table-of-contents)
+
+
 Please refer to the [rollups-examples requirements](https://github.com/cartesi/rollups-examples/tree/main/README.md#requirements).
 
 # Install Process
@@ -79,6 +80,8 @@ The steps below show how to set up and run the Decentralized Biometrics example.
 
 ## Creating the needed files
 [(Back to top)](#table-of-contents)
+
+
 To run the biometrics example, clone the repository as follows:
 
 ```shell
@@ -168,7 +171,9 @@ Recall 0.81
 Accuracy 0.7975
 ```
 ## Loading and running in production mode
+
 [(Back to top)](#table-of-contents)
+
 
 With all the files needed ready, run the following command:
 
@@ -198,7 +203,9 @@ docker compose -f ../docker-compose.yml -f ./docker-compose.override.yml down -v
 This is a very important command while dealing with the application because it turns down the dapp and also deletes the docker volumes. While testing this can be crucial while dealing with the blockchain node. Sometimes you want to restart the blockchain from the start, and only by doing this command this can be accomplished. 
 
 ## Running the back-end in host mode
+
 [(Back to top)](#table-of-contents)
+
 
 When developing an application, it is often important to easily test and debug it. For that matter, it is possible to run the Cartesi Rollups environment in [host mode](https://github.com/cartesi/rollups-examples/tree/main/README.md#host-mode), so that the DApp's back-end can be executed directly on the host machine, allowing it to be debugged using regular development tools such as an IDE.
 
@@ -214,7 +221,9 @@ ROLLUP_HTTP_SERVER_URL="http://127.0.0.1:5004" python3 biometrics.py
 ```
 
 # Understanding the application
+
 [(Back to top)](#table-of-contents)
+
 
 As explained before, The DApp will receive an image as input to classify as a Live(genuine) finger or Fake(Spoof attack). 
 
@@ -223,11 +232,17 @@ When building the machine, the dataset is used as training data for building a S
 The predicted classification result will be given as "Live" (Genuine Finger) or "Fake" (Spoof Attack).
 
 # Interacting with the application
+
 [(Back to top)](#table-of-contents)
+
+
 There are two ways to interact with the application. One is the [frontend console](../frontend-console) and another is the [frontend-biometrics](../frontend-biometrics). Here is a detailed explanation of how to do both.
 
 ## Frontend-Console 
+
 [(Back to top)](#table-of-contents)
+
+
 We can use the [frontend-console](../frontend-console) application to interact with the DApp.
 Ensure that the [application has already been built](../frontend-console/README.md#building) before using it.
 
@@ -285,6 +300,8 @@ Below is a short video on how the input front frontend console should work:
 
 
 ## Using the Frontend-biometrics
+
+
 [(Back to top)](#table-of-contents)
 
 We can use the [frontend-console](../frontend-biometrics) application to interact with the DApp.
