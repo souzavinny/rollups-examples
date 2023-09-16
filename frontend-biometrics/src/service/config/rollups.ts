@@ -52,11 +52,10 @@ export const genRollupsContracts = (
     if (!address) {
         throw new Error("unable to resolve DApp address");
     }
-    //TODO
-    const InputBox = "0x59b22D57D4f067708AB0c00552767405926dc768";
-    const ERC20Portal = "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB";
-    const ERC721Portal = "0x237F8DD094C0e47f4236f12b4Fa01d6Dae89fb87";
-    const OutputContract = "0x70ac08179605AF2D9e75782b8DEcDD3c22aA4D0C"
+    const InputBox = env.VITE_INPUTBOX_ADDRESS;
+    const ERC20Portal = env.VITE_ERC20Portal_ADDRESS;
+    const ERC721Portal = env.VITE_ERC721Portal_ADDRESS;
+    const OutputContract = env.VITE_OUTPUT_ADDRESS;
     // connect to contracts
     const inputContract = IInputBox__factory.connect(
         InputBox,
@@ -75,12 +74,6 @@ export const genRollupsContracts = (
         ERC721Portal,
         provider.getSigner()
     );
-
-    console.log("This is the inputbox address: ", InputBox)
-    console.log("This is the ERC20Portal address: ", ERC20Portal)
-    console.log("This is the outputContract address: ", OutputContract)
-    console.log("This is the ERC721Portal address: ", ERC721Portal)
-    console.log("This is dapp: adress: ", address)
     
     return {
         dapp: OutputContract,
