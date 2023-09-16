@@ -18,8 +18,6 @@ export const connect = (
     walletProvider: WalletState["provider"]
 ): RollupsContracts => {
     const provider = new ethers.providers.Web3Provider(walletProvider);
-
     const rollupContract = genRollupsContracts(chainId, provider);
-
     return rollupContract;
 };
