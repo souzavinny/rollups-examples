@@ -11,9 +11,9 @@
 
 import { ethers } from "ethers";
 import {
-    NoticesByEpochAndInputDocument,
+    NoticesByInputDocument,
     Notice,
-    NoticesByEpochAndInputQueryVariables
+    NoticesByInputQueryVariables
 } from "../../generated/graphql";
 import { client } from "./config/client";
 
@@ -38,24 +38,26 @@ export const isPartialNotice = (n: Notice | null): n is Notice =>
  */
 
 export const getNotices = async (
-    noticeQueryVariables: NoticesByEpochAndInputQueryVariables,
+    noticeQueryVariables: NoticesByInputQueryVariables,
     noCache?: boolean
 ): Promise<GetNoticesResult> => {
     const result: GetNoticesResult = { data: null, error: null };
     // query the GraphQL server for notices of our input
     const { data, error, errors } = await client.query({
-        query: NoticesByEpochAndInputDocument,
+        query: NoticesByInputDocument,
         variables: noticeQueryVariables,
         fetchPolicy: noCache ? "network-only" : "cache-first",
         errorPolicy: "ignore",
     });
 
-    const notices = data?.epoch?.input?.notices?.nodes;
-    if (!!notices) {
-        result.data = notices.filter(isPartialNotice).map((notice: Notice) => ({
-            ...notice,
-            payload_parsed: ethers.utils.toUtf8String(notice.payload),
-        }));
+    const noticeEdges = data?.input?.notices?.edges;
+    if (!!noticeEdges) {
+        result.data = noticeEdges.map((edge: { node: any; }) => {
+            const notice = edge.node;
+            return {
+                ...notice,
+                payload_parsed: ethers.utils.toUtf8String(notice.payload),
+            }});
     } else if (!!error?.message) {
         result.error = error.message;
     } else if (!!errors?.length) {
@@ -65,6 +67,5 @@ export const getNotices = async (
         });
         result.error = errorMessage;
     }
-
-    return result;
+    return result
 };

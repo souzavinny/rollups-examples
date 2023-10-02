@@ -45,8 +45,7 @@ export const HomeView: FC = () => {
                     fetchNotices(
                         noticesDispatch,
                         {
-                            epoch_index: result?.epochNumber ?? 0,
-                            input_index: result?.inputIndex ?? 0,
+                            inputIndex: result?.inputIndex ?? 0,
                         },
                         true
                     )
