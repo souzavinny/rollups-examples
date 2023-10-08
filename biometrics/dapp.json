@@ -1,6 +1,0 @@
-{
-  "fs": {
-    "files": ["biometrics.py","model.py", "entrypoint.sh", "fexrvv", "opencv", "pythonentry.sh"],
-    "size": 256000
-  }
-}
